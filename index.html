@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우연한 소개팅</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Gaegu:wght@400;700&family=Sunflower:wght@300;500;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D48A9F;
+            --primary-light: #f0c4d0;
+            --primary-dark: #b87a8d;
+            --bg: #fdf5f7;
+            --text: #2a2a2a;
+            --text-mid: #666;
+            --text-light: #999;
+            --font-title: 'Sunflower', sans-serif;
+            --font-accent: 'Poor Story', cursive;
+            --font-sketch: 'Gaegu', cursive;
+            --font-warm: 'Sunflower', sans-serif;
+            --font-display: 'Sunflower', sans-serif;
+            --font-body: 'Noto Sans KR', -apple-system, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            color: var(--text); line-height: 1.7;
+            word-break: keep-all;
+            background: var(--bg);
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+
+        /* ===== 좌우 플로팅 오브 장식 ===== */
+        .side-deco {
+            position: fixed; z-index: 1; pointer-events: none;
+            top: 0; bottom: 0;
+        }
+        .side-deco-left { left: 0; width: 220px; }
+        .side-deco-right { right: 0; width: 220px; }
+        .side-orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(25px);
+            will-change: transform;
+        }
+        /* 왼쪽 오브 */
+        .side-deco-left .o1 { width: 180px; height: 180px; top: 8%; left: -30px; background: rgba(212,138,159,0.38); animation: floatOrb1 8s ease-in-out infinite; }
+        .side-deco-left .o2 { width: 120px; height: 120px; top: 35%; left: 25px; background: rgba(240,196,208,0.42); animation: floatOrb2 10s ease-in-out infinite; }
+        .side-deco-left .o3 { width: 150px; height: 150px; top: 60%; left: -10px; background: rgba(212,138,159,0.3); animation: floatOrb3 12s ease-in-out infinite; }
+        .side-deco-left .o4 { width: 100px; height: 100px; top: 82%; left: 35px; background: rgba(240,196,208,0.35); animation: floatOrb1 9s ease-in-out infinite reverse; }
+        /* 오른쪽 오브 */
+        .side-deco-right .o1 { width: 160px; height: 160px; top: 12%; right: -20px; background: rgba(240,196,208,0.38); animation: floatOrb2 9s ease-in-out infinite; }
+        .side-deco-right .o2 { width: 130px; height: 130px; top: 42%; right: 15px; background: rgba(212,138,159,0.32); animation: floatOrb3 11s ease-in-out infinite; }
+        .side-deco-right .o3 { width: 110px; height: 110px; top: 65%; right: -10px; background: rgba(240,196,208,0.36); animation: floatOrb1 7s ease-in-out infinite reverse; }
+        .side-deco-right .o4 { width: 170px; height: 170px; top: 85%; right: -30px; background: rgba(212,138,159,0.28); animation: floatOrb2 13s ease-in-out infinite; }
+
+        .side-heart {
+            position: absolute; pointer-events: none;
+            color: rgba(212,138,159,0.35);
+            font-size: 32px;
+        }
+        .side-sparkle {
+            position: absolute; pointer-events: none;
+            color: rgba(212,138,159,0.3);
+            font-size: 18px;
+        }
+        /* 왼쪽 하트 */
+        .side-deco-left .h1 { top: 5%; left: 60px; animation: floatHeart1 6s ease-in-out infinite; color: rgba(212,138,159,0.5); font-size: 34px; }
+        .side-deco-left .h2 { top: 20%; left: 15px; animation: floatHeart2 8s ease-in-out infinite; color: rgba(240,196,208,0.55); font-size: 28px; }
+        .side-deco-left .h3 { top: 35%; left: 55px; animation: floatHeart3 10s ease-in-out infinite; color: rgba(212,138,159,0.4); font-size: 24px; }
+        .side-deco-left .h4 { top: 48%; left: 10px; animation: floatHeart4 7s ease-in-out infinite; color: rgba(240,196,208,0.52); font-size: 30px; }
+        .side-deco-left .h5 { top: 62%; left: 45px; animation: floatHeart1 9s ease-in-out infinite reverse; color: rgba(212,138,159,0.45); font-size: 22px; }
+        .side-deco-left .h6 { top: 78%; left: 20px; animation: floatHeart3 11s ease-in-out infinite; color: rgba(240,196,208,0.48); font-size: 36px; }
+        .side-deco-left .h7 { top: 90%; left: 55px; animation: floatHeart2 7.5s ease-in-out infinite reverse; color: rgba(212,138,159,0.42); font-size: 20px; }
+        /* 왼쪽 스파클 */
+        .side-deco-left .s1 { top: 15%; left: 40px; animation: floatHeart4 13s linear infinite; color: rgba(212,138,159,0.35); font-size: 16px; }
+        .side-deco-left .s2 { top: 45%; left: 65px; animation: floatHeart2 15s linear infinite reverse; color: rgba(240,196,208,0.3); font-size: 14px; }
+        .side-deco-left .s3 { top: 70%; left: 30px; animation: floatHeart1 12s linear infinite; color: rgba(212,138,159,0.28); font-size: 18px; }
+        /* 오른쪽 하트 */
+        .side-deco-right .h1 { top: 8%; right: 50px; animation: floatHeart2 7s ease-in-out infinite; color: rgba(240,196,208,0.5); font-size: 32px; }
+        .side-deco-right .h2 { top: 22%; right: 20px; animation: floatHeart4 9s ease-in-out infinite; color: rgba(212,138,159,0.45); font-size: 26px; }
+        .side-deco-right .h3 { top: 38%; right: 60px; animation: floatHeart1 8s ease-in-out infinite reverse; color: rgba(240,196,208,0.55); font-size: 28px; }
+        .side-deco-right .h4 { top: 52%; right: 15px; animation: floatHeart3 6.5s ease-in-out infinite; color: rgba(212,138,159,0.48); font-size: 34px; }
+        .side-deco-right .h5 { top: 65%; right: 45px; animation: floatHeart2 10s ease-in-out infinite reverse; color: rgba(240,196,208,0.42); font-size: 22px; }
+        .side-deco-right .h6 { top: 80%; right: 25px; animation: floatHeart1 11s ease-in-out infinite; color: rgba(212,138,159,0.5); font-size: 30px; }
+        .side-deco-right .h7 { top: 92%; right: 55px; animation: floatHeart4 8.5s ease-in-out infinite reverse; color: rgba(240,196,208,0.4); font-size: 20px; }
+        /* 오른쪽 스파클 */
+        .side-deco-right .s1 { top: 30%; right: 40px; animation: floatHeart3 14s linear infinite; color: rgba(240,196,208,0.32); font-size: 16px; }
+        .side-deco-right .s2 { top: 58%; right: 65px; animation: floatHeart1 12s linear infinite reverse; color: rgba(212,138,159,0.28); font-size: 14px; }
+        .side-deco-right .s3 { top: 85%; right: 30px; animation: floatHeart4 16s linear infinite; color: rgba(240,196,208,0.3); font-size: 18px; }
+
+        @keyframes floatOrb1 {
+            0% { transform: translate(0, 0) scale(1); }
+            20% { transform: translate(25px, -35px) scale(1.1); }
+            40% { transform: translate(-15px, 20px) scale(0.9); }
+            60% { transform: translate(30px, 10px) scale(1.08); }
+            80% { transform: translate(-20px, -25px) scale(0.95); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes floatOrb2 {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-30px, 40px) scale(1.12); }
+            50% { transform: translate(35px, -20px) scale(0.92); }
+            75% { transform: translate(-15px, -30px) scale(1.06); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes floatOrb3 {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            30% { transform: translate(20px, -40px) scale(1.15); opacity: 0.7; }
+            60% { transform: translate(-25px, 30px) scale(0.88); opacity: 1; }
+            100% { transform: translate(0, 0) scale(1); opacity: 1; }
+        }
+        @keyframes floatHeart1 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.8; }
+            15% { transform: translate(20px, -60px) rotate(18deg) scale(1.3); opacity: 1; }
+            35% { transform: translate(-15px, 40px) rotate(-12deg) scale(0.85); opacity: 0.6; }
+            55% { transform: translate(25px, -80px) rotate(22deg) scale(1.15); opacity: 0.9; }
+            75% { transform: translate(-10px, 30px) rotate(-8deg) scale(1.05); opacity: 0.7; }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.8; }
+        }
+        @keyframes floatHeart2 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.7; }
+            20% { transform: translate(-25px, -70px) rotate(-20deg) scale(1.35); opacity: 1; }
+            40% { transform: translate(15px, 50px) rotate(15deg) scale(0.8); opacity: 0.5; }
+            60% { transform: translate(-20px, -90px) rotate(-25deg) scale(1.2); opacity: 0.9; }
+            80% { transform: translate(10px, 35px) rotate(10deg) scale(0.9); opacity: 0.6; }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.7; }
+        }
+        @keyframes floatHeart3 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.9; }
+            16% { transform: translate(15px, -55px) rotate(15deg) scale(1.25); opacity: 0.7; }
+            33% { transform: translate(-20px, 45px) rotate(-18deg) scale(0.9); opacity: 1; }
+            50% { transform: translate(25px, -85px) rotate(20deg) scale(1.3); opacity: 0.55; }
+            66% { transform: translate(-12px, 30px) rotate(-10deg) scale(0.85); opacity: 0.85; }
+            83% { transform: translate(18px, -40px) rotate(12deg) scale(1.1); opacity: 0.7; }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.9; }
+        }
+        @keyframes floatHeart4 {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.75; }
+            12% { transform: translate(-18px, -75px) rotate(-15deg) scale(1.2); opacity: 1; }
+            25% { transform: translate(22px, 35px) rotate(20deg) scale(0.9); opacity: 0.6; }
+            37% { transform: translate(-10px, -95px) rotate(-22deg) scale(1.35); opacity: 0.85; }
+            50% { transform: translate(15px, 55px) rotate(12deg) scale(0.8); opacity: 0.5; }
+            62% { transform: translate(-25px, -65px) rotate(-18deg) scale(1.15); opacity: 0.9; }
+            75% { transform: translate(20px, 25px) rotate(15deg) scale(1.05); opacity: 0.7; }
+            87% { transform: translate(-8px, -45px) rotate(-8deg) scale(1.1); opacity: 0.8; }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.75; }
+        }
+        @media (max-width: 1200px) {
+            .side-deco { display: none; }
+        }
+
+        /* 스크롤 애니메이션 */
+        .fade-in {
+            opacity: 0; transform: translateY(28px);
+            transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .fade-in.show { opacity: 1; transform: translateY(0); }
+        .fade-in-left {
+            opacity: 0; transform: translateX(-40px);
+            transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .fade-in-left.show { opacity: 1; transform: translateX(0); }
+        .fade-in-right {
+            opacity: 0; transform: translateX(40px);
+            transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .fade-in-right.show { opacity: 1; transform: translateX(0); }
+
+        /* ===== 감성 애니메이션 ===== */
+        /* 1. 히어로 타이핑 커서 */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px; height: 1em;
+            background: rgba(255,255,255,0.8);
+            margin-left: 4px; vertical-align: text-bottom;
+            animation: blink 0.85s step-end infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        /* 2. 무드 디바이더 라인 그리기 */
+        .mood-line {
+            transform: scaleY(0); transform-origin: top;
+            transition: transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .mood-divider.show .mood-line { transform: scaleY(1); }
+        .mood-text {
+            opacity: 0; transform: translateY(12px);
+            transition: opacity 0.8s 0.6s ease, transform 0.8s 0.6s ease;
+        }
+        .mood-divider.show .mood-text { opacity: 1; transform: translateY(0); }
+
+        /* 3. 스토리 카드 순차 등장 stagger — JS에서 delay 설정 */
+
+        /* 4. 커플 후기 보더 채움 */
+        .couple-text {
+            border-left: 3px solid transparent;
+            background-image: linear-gradient(135deg, #fff 60%, rgba(240,196,208,0.1));
+            position: relative;
+        }
+        .couple-text::before {
+            content: ''; position: absolute; left: -3px; bottom: 0;
+            width: 3px; height: 0; background: var(--primary);
+            transition: height 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .couple-card.show .couple-text::before,
+        .couple-card.border-animate .couple-text::before { height: 100%; }
+
+        /* 5. 플로팅 버튼 펄스 */
+        @keyframes floatPulse {
+            0% { box-shadow: 0 6px 24px rgba(212,138,159,0.4); }
+            50% { box-shadow: 0 6px 36px rgba(212,138,159,0.7), 0 0 0 12px rgba(212,138,159,0.12); }
+            100% { box-shadow: 0 6px 24px rgba(212,138,159,0.4); }
+        }
+        .floating-cta { animation: floatPulse 2.5s ease-in-out infinite; }
+
+        /* 6. 통계 숫자 스케일업 */
+        @keyframes scaleUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.12); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .stat-num { opacity: 0; }
+        .stat-num.animate { animation: scaleUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+
+        /* 7. 패럴랙스 히어로 */
+        .hero { background-attachment: fixed; }
+        @media (max-width: 768px) { .hero { background-attachment: scroll; } }
+
+        /* ===== 헤더 ===== */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(253,245,247,0.92); backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            transition: top 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .header-top {
+            max-width: 1100px; margin: 0 auto; padding: 14px 24px 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative;
+        }
+        .logo-small { font-family: var(--font-accent); font-size: 1rem; color: var(--primary); letter-spacing: -0.3px; font-weight: 600; }
+        .logo-center { position: absolute; left: 50%; transform: translateX(-50%); }
+        .logo-center img { height: 52px; width: auto; }
+        .header-nav {
+            max-width: 1100px; margin: 0 auto; padding: 20px 24px 18px;
+            display: flex; justify-content: center; gap: 20px;
+        }
+        .header-nav a {
+            font-family: var(--font-display);
+            font-size: 1.08rem; color: var(--text-mid); font-weight: 600;
+            padding: 12px 30px; border-radius: 50px;
+            border: 1.5px solid rgba(212,138,159,0.25);
+            background: rgba(255,255,255,0.6);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            letter-spacing: -0.2px;
+        }
+        .header-nav a:hover {
+            background: var(--primary); color: #fff;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212,138,159,0.3);
+        }
+        .hamburger { font-size: 1.6rem; color: #888; cursor: pointer; user-select: none; display: flex; flex-direction: column; gap: 5px; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #888; border-radius: 2px; transition: all 0.3s; }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .mobile-menu {
+            display: none; flex-direction: column; align-items: center; gap: 10px;
+            padding: 0 24px 18px; background: rgba(253,245,247,0.98);
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            font-family: var(--font-display);
+            font-size: 1.05rem; color: var(--text-mid); font-weight: 600;
+            padding: 14px 30px; border-radius: 50px; width: 100%; text-align: center;
+            border: 1.5px solid rgba(212,138,159,0.25);
+            background: rgba(255,255,255,0.6);
+            transition: all 0.3s ease;
+        }
+        .mobile-menu a:hover {
+            background: var(--primary); color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* ===== 히어로 ===== */
+        .hero {
+            margin-top: 120px;
+            width: 100%; height: 580px;
+            background: url('web/hero.jpg') center 30%/cover no-repeat;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(175deg, rgba(200,120,145,0.35) 0%, rgba(60,30,40,0.7) 100%);
+            opacity: var(--parallax-opacity, 1);
+            transition: opacity 0.1s linear;
+        }
+        .hero-content {
+            position: relative; z-index: 1; text-align: center;
+            color: #fff; padding: 0 24px;
+        }
+        .hero-content h1 {
+            font-family: var(--font-title);
+            font-size: 3.8rem; font-weight: 700;
+            line-height: 1.45; margin-bottom: 20px;
+            text-shadow: 0 3px 30px rgba(0,0,0,0.25);
+        }
+        .hero-content .hero-sub {
+            font-family: var(--font-warm);
+            font-size: 1.5rem; opacity: 0.9;
+            line-height: 1.9; margin-bottom: 36px;
+            font-weight: 500;
+        }
+        .hero-btn {
+            display: inline-block;
+            font-family: var(--font-display);
+            padding: 15px 44px; border-radius: 50px;
+            background: rgba(255,255,255,0.15); color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.45);
+            font-size: 1.15rem; font-weight: 600;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            letter-spacing: -0.2px;
+        }
+        .hero-btn:hover {
+            background: #fff; color: var(--primary-dark);
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+
+        /* ===== 통계 바 ===== */
+        .stats-section {
+            max-width: 880px; margin: -48px auto 0;
+            position: relative; z-index: 2; padding: 0 24px;
+        }
+        .stats-bar {
+            display: flex; justify-content: space-around;
+            background: #fff; border-radius: 20px;
+            padding: 34px 16px;
+            box-shadow: 0 10px 50px rgba(212,138,159,0.1);
+        }
+        .stat-item { text-align: center; }
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: 2.7rem; font-weight: 700; color: var(--primary);
+            letter-spacing: -1px;
+        }
+        .stat-label { font-family: var(--font-warm); font-size: 0.95rem; color: #aaa; margin-top: 5px; }
+
+        /* ===== 실시간 매칭 스토리 ===== */
+        .story-section {
+            max-width: 1100px; margin: 0 auto;
+            padding: 90px 24px 50px;
+        }
+        .story-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            margin-bottom: 32px; color: var(--text);
+        }
+        .story-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+        }
+        .story-card {
+            border-radius: 14px; overflow: hidden;
+            background: #fff; border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .story-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 28px rgba(212,138,159,0.13);
+        }
+        .story-card .photo-area {
+            width: calc(100% - 14px); height: 175px;
+            border-radius: 10px; margin: 7px; overflow: hidden;
+        }
+        .story-card .photo-area img { width: 100%; height: 100%; object-fit: cover; }
+        .story-info { padding: 10px 13px 14px; }
+        .story-date { font-family: var(--font-warm); font-size: 1.05rem; color: var(--text); font-weight: 600; }
+        .story-label { font-family: var(--font-accent); font-size: 0.95rem; color: #bbb; margin-top: 2px; }
+
+        /* ===== 무드 디바이더 ===== */
+        .mood-divider {
+            text-align: center; padding: 80px 24px 70px;
+        }
+        .mood-divider .mood-line {
+            width: 1.5px; height: 60px; margin: 0 auto 24px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+        }
+        .mood-divider .mood-text {
+            font-family: var(--font-warm);
+            font-size: 1.65rem; color: var(--text-mid);
+            line-height: 1.9; font-style: italic;
+        }
+
+        /* ===== 소개 ===== */
+        .intro-section {
+            max-width: 700px; margin: 0 auto;
+            padding: 100px 24px 120px;
+        }
+        .intro-text .label {
+            display: inline-block;
+            font-size: 1.05rem; font-weight: 700; color: var(--primary);
+            background: rgba(212,138,159,0.1);
+            padding: 5px 14px; border-radius: 50px;
+            margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .intro-text h2 {
+            font-family: var(--font-title);
+            font-size: 2.8rem; font-weight: 700;
+            color: var(--text); margin-bottom: 18px; line-height: 1.4;
+        }
+        .intro-text .brand-name {
+            font-family: var(--font-accent);
+            font-size: 1.45rem; color: var(--primary);
+            font-weight: 600; margin-bottom: 30px;
+        }
+        .intro-text .desc {
+            font-family: var(--font-warm);
+            font-size: 1.25rem; color: var(--text-mid);
+            line-height: 2.1; margin-bottom: 36px;
+        }
+        .intro-highlight-box {
+            background: linear-gradient(135deg, rgba(212,138,159,0.08), rgba(240,196,208,0.15));
+            border-radius: 20px; padding: 36px 30px;
+            border-left: 3px solid var(--primary-light);
+        }
+        .desc-highlight {
+            font-family: var(--font-accent);
+            font-size: 1.4rem; line-height: 2;
+            color: #777;
+        }
+
+        /* ===== 매칭 과정 ===== */
+        .process-section {
+            background: #fff; padding: 110px 24px;
+        }
+        .process-inner { max-width: 900px; margin: 0 auto; }
+        .process-inner h2 {
+            font-family: var(--font-display);
+            font-size: 2.3rem; font-weight: 400;
+            text-align: center; margin-bottom: 10px;
+        }
+        .process-sub {
+            font-family: var(--font-accent);
+            text-align: center; color: #aaa; font-size: 1.2rem;
+            margin-bottom: 65px;
+        }
+        .process-steps {
+            display: flex; gap: 16px; position: relative;
+        }
+        .process-steps::before {
+            content: ''; position: absolute;
+            top: 32px; left: 50px; right: 50px; height: 2px;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary), var(--primary-light));
+        }
+        .step { flex: 1; text-align: center; position: relative; z-index: 1; }
+        .step-num {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px;
+            color: #fff; font-size: 1.2rem; font-weight: 700;
+            box-shadow: 0 4px 16px rgba(212,138,159,0.3);
+        }
+        .step h4 { font-family: var(--font-accent); font-size: 1.3rem; font-weight: 600; margin-bottom: 6px; }
+        .step p { font-family: var(--font-accent); font-size: 1.1rem; color: #aaa; line-height: 1.55; }
+
+        /* ===== 이런 분께 추천 ===== */
+        .recommend-section {
+            max-width: 700px; margin: 0 auto;
+            padding: 100px 24px 50px; text-align: center;
+        }
+        .recommend-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            margin-bottom: 50px;
+        }
+        .recommend-list {
+            display: flex; flex-direction: column; gap: 14px;
+            text-align: left;
+        }
+        .recommend-item {
+            background: #fff; border-radius: 14px;
+            padding: 22px 28px;
+            border: 1px solid rgba(0,0,0,0.04);
+            display: flex; align-items: center; gap: 16px;
+            transition: all 0.3s;
+        }
+        .recommend-item:hover {
+            transform: translateX(6px);
+            box-shadow: 0 4px 20px rgba(212,138,159,0.1);
+        }
+        .recommend-check {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--primary-light);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            color: var(--primary-dark); font-size: 0.75rem; font-weight: 800;
+        }
+        .recommend-item span {
+            font-family: var(--font-accent);
+            font-size: 1.3rem; color: var(--text-mid);
+        }
+
+        /* ===== 다른 이유 ===== */
+        .why-section {
+            max-width: 900px; margin: 0 auto;
+            padding: 100px 24px 80px;
+        }
+        .why-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            text-align: center; margin-bottom: 10px;
+        }
+        .why-sub {
+            font-family: var(--font-accent);
+            text-align: center; color: #aaa;
+            font-size: 1.05rem; margin-bottom: 55px;
+        }
+        .why-card {
+            background: #fff; border-radius: 16px; padding: 32px 30px;
+            border: 1px solid rgba(0,0,0,0.04); margin-bottom: 18px;
+        }
+        .why-card:hover {
+            box-shadow: 0 6px 24px rgba(212,138,159,0.08);
+        }
+        .why-card .why-header {
+            display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px;
+        }
+        .why-card .num {
+            font-size: 2.2rem; font-weight: 800; color: var(--primary-light); line-height: 1;
+        }
+        .why-card h3 { font-size: 1.4rem; font-weight: 600; }
+        .why-card p {
+            font-family: var(--font-accent);
+            font-size: 1.15rem; color: var(--text-mid); line-height: 1.85; padding-left: 52px;
+        }
+
+        /* ===== Real Couple ===== */
+        .couple-section {
+            background: #fff; padding: 110px 24px;
+        }
+        .couple-inner { max-width: 1100px; margin: 0 auto; }
+        .couple-inner > h2 {
+            font-family: var(--font-title);
+            font-size: 2.4rem; font-weight: 700;
+            text-align: center; margin-bottom: 8px;
+        }
+        .couple-sub {
+            font-family: var(--font-accent);
+            text-align: center; color: #aaa;
+            font-size: 1.1rem; margin-bottom: 55px;
+        }
+        .couple-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .couple-card {
+            border-radius: 16px; overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: var(--bg);
+        }
+        .couple-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(212,138,159,0.12);
+        }
+        .couple-photo {
+            width: 100%; height: 260px; overflow: hidden;
+        }
+        .couple-photo img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .couple-card:hover .couple-photo img { transform: scale(1.04); }
+        .couple-text {
+            padding: 24px;
+            font-family: var(--font-sketch);
+            font-size: 1.35rem; color: #777; line-height: 1.8;
+        }
+        .couple-notice {
+            text-align: center; margin-top: 35px;
+            font-size: 0.8rem; color: #ccc;
+        }
+        .more-btn {
+            display: block; margin: 32px auto 0; padding: 14px 44px;
+            font-family: var(--font-display); font-size: 1.1rem;
+            color: var(--primary); background: #fff;
+            border: 1.5px solid var(--primary); border-radius: 50px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .more-btn:hover {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 4px 16px rgba(212,138,159,0.3);
+        }
+        .hidden-items { display: none; }
+        .couple-grid .hidden-items.show { display: block; }
+        .review-list .hidden-items.show { display: block; }
+
+        /* ===== 후기 ===== */
+        .review-section {
+            max-width: 800px; margin: 0 auto;
+            padding: 110px 24px 70px;
+        }
+        .review-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            text-align: center; margin-bottom: 14px;
+        }
+        .review-section .review-sub {
+            font-family: var(--font-accent);
+            text-align: center; color: #aaa;
+            font-size: 1.1rem; margin-bottom: 45px;
+        }
+        .review-list { display: flex; flex-direction: column; gap: 18px; }
+        .review-item {
+            background: linear-gradient(135deg, #fff 60%, rgba(240,196,208,0.12));
+            border-radius: 16px;
+            padding: 30px 34px; position: relative;
+            border: 1px solid rgba(212,138,159,0.1);
+            border-left: 3px solid var(--primary-light);
+            transition: all 0.3s;
+        }
+        .review-item:hover {
+            box-shadow: 0 6px 24px rgba(212,138,159,0.12);
+            border-left-color: var(--primary);
+        }
+        .review-item::before {
+            content: '\201C';
+            font-family: var(--font-title);
+            font-size: 3.5rem; color: var(--primary-light);
+            position: absolute; top: 8px; left: 26px; line-height: 1;
+        }
+        .review-text {
+            font-family: var(--font-sketch);
+            font-size: 1.4rem; color: var(--text-mid);
+        }
+        .review-text b {
+            font-size: 1.55rem; color: var(--text-dark);
+            line-height: 1.9; padding-left: 18px;
+        }
+        .review-author {
+            font-family: var(--font-warm);
+            margin-top: 14px; padding-left: 18px;
+            font-size: 0.92rem; color: #bbb;
+        }
+
+        /* ===== 이용 안내 ===== */
+        .info-section {
+            max-width: 1100px; margin: 0 auto; padding: 110px 24px;
+        }
+        .info-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            text-align: center; margin-bottom: 50px;
+        }
+        .info-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .info-card {
+            border-radius: 16px; overflow: hidden;
+            background: #fff; border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.35s;
+        }
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 28px rgba(212,138,159,0.1);
+        }
+        .info-card-header {
+            background: var(--primary); color: white;
+            padding: 30px 24px; text-align: center;
+        }
+        .info-card-header .num { font-size: 2rem; font-weight: 700; opacity: 0.85; }
+        .info-card-header h3 { font-family: var(--font-display); font-size: 1.45rem; font-weight: 500; margin-top: 4px; }
+        .info-card-body {
+            font-family: var(--font-accent);
+            padding: 28px 24px; min-height: 90px;
+            color: #aaa; font-size: 1.15rem; line-height: 1.75;
+        }
+
+        /* ===== 신뢰 섹션 ===== */
+        .trust-section {
+            max-width: 900px; margin: 0 auto; padding: 100px 24px 60px;
+            text-align: center;
+        }
+        .trust-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .trust-sub {
+            font-family: var(--font-accent);
+            color: #aaa; font-size: 1.1rem; margin-bottom: 50px;
+        }
+        .trust-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .trust-card {
+            background: #fff; border-radius: 16px; padding: 36px 24px;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.3s;
+        }
+        .trust-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(212,138,159,0.1);
+        }
+        .trust-icon {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: rgba(212,138,159,0.1);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 1.5rem;
+        }
+        .trust-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.35rem; font-weight: 600; margin-bottom: 10px;
+        }
+        .trust-card p {
+            font-family: var(--font-accent);
+            font-size: 1.15rem; color: #999; line-height: 1.75;
+        }
+
+        /* ===== 상담 ===== */
+        .contact-section {
+            text-align: center; padding: 110px 24px;
+            background: #fff;
+        }
+        .contact-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.4rem; font-weight: 700; margin-bottom: 10px;
+        }
+        .contact-sub { font-family: var(--font-accent); color: #aaa; font-size: 1.25rem; margin-bottom: 40px; }
+        .contact-box {
+            display: inline-block; width: 100%; max-width: 460px;
+            background: var(--bg);
+            border: 1px solid rgba(212,138,159,0.12);
+            border-radius: 24px; padding: 44px 32px;
+        }
+        .phone-number {
+            font-family: var(--font-display);
+            font-size: 2.6rem; font-weight: 700;
+            color: var(--primary); margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+        .action-buttons { display: flex; gap: 10px; margin-bottom: 14px; }
+        .action-buttons a {
+            flex: 1; padding: 14px; border-radius: 14px; font-weight: 600;
+            font-family: var(--font-display); font-size: 1.15rem;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .btn-kakao { background: #FEE500; color: #3C1E1E; }
+        .btn-sms { background: var(--primary); color: white; }
+        .action-buttons a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .small-text { font-size: 0.78rem; color: #ccc; }
+
+        /* ===== FAQ ===== */
+        .faq-section {
+            max-width: 700px; margin: 0 auto; padding: 100px 24px;
+        }
+        .faq-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            text-align: center; margin-bottom: 45px;
+        }
+        .faq-item { border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .faq-question {
+            width: 100%; padding: 22px 0; font-size: 1.2rem;
+            font-weight: 600; color: var(--text);
+            display: flex; justify-content: space-between; align-items: center;
+            border: none; background: none; cursor: pointer;
+            text-align: left; font-family: var(--font-warm);
+            transition: color 0.25s;
+        }
+        .faq-question:hover { color: var(--primary); }
+        .faq-question.active {
+            color: var(--primary);
+            background: rgba(255,230,240,0.3);
+            margin: 0 -12px; padding: 22px 12px;
+            border-radius: 10px;
+        }
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .faq-answer p {
+            font-family: var(--font-accent);
+            padding: 0 0 24px; color: #888;
+            font-size: 1.2rem; line-height: 1.9;
+        }
+
+        /* ===== 최종 CTA ===== */
+        .final-section {
+            text-align: center; padding: 130px 24px;
+            background: linear-gradient(180deg, var(--bg) 0%, #f3dce3 100%);
+        }
+        .final-section p {
+            font-family: var(--font-warm);
+            font-size: 2.4rem; color: var(--text);
+            margin-bottom: 44px; line-height: 1.7;
+        }
+        .btn-cta {
+            display: inline-block;
+            background: var(--primary); color: #fff;
+            font-family: var(--font-display);
+            padding: 18px 54px; font-size: 1.25rem; font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 6px 24px rgba(212,138,159,0.35);
+        }
+        .btn-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 36px rgba(212,138,159,0.45);
+        }
+
+        /* ===== 플로팅 상담 버튼 ===== */
+        .floating-cta {
+            position: fixed; bottom: 28px; right: 24px; z-index: 999;
+            width: 60px; height: 60px; border-radius: 50%;
+            background: var(--primary); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 24px rgba(212,138,159,0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .floating-cta:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 32px rgba(212,138,159,0.5);
+        }
+        .floating-cta .tooltip {
+            position: absolute; right: 72px; top: 50%; transform: translateY(-50%);
+            background: #fff; color: var(--text); font-size: 0.85rem;
+            padding: 8px 16px; border-radius: 10px; white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            font-family: var(--font-body);
+        }
+        .floating-cta:hover .tooltip { opacity: 1; }
+
+        /* ===== 푸터 ===== */
+        footer {
+            text-align: center; padding: 48px 24px;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            color: #ccc; font-size: 0.78rem;
+        }
+        footer .brand {
+            color: var(--primary); font-weight: 700;
+            font-size: 0.95rem; margin-bottom: 8px;
+        }
+
+        /* ===== YOUPASS 섹션 ===== */
+        .youpass-section {
+            padding: 120px 24px 100px;
+            background: linear-gradient(175deg, #fff 0%, #fdf0f4 40%, #f8dce4 100%);
+            position: relative; overflow: hidden;
+        }
+        .youpass-section::before {
+            content: ''; position: absolute;
+            top: -120px; right: -120px;
+            width: 360px; height: 360px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,138,159,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .youpass-section::after {
+            content: ''; position: absolute;
+            bottom: -80px; left: -80px;
+            width: 280px; height: 280px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(240,196,208,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .youpass-inner {
+            max-width: 800px; margin: 0 auto; position: relative; z-index: 1;
+        }
+        .youpass-section h2 {
+            font-family: var(--font-title);
+            font-size: 2.6rem; font-weight: 700;
+            text-align: center; margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .youpass-title-en {
+            font-family: var(--font-display);
+            text-align: center; font-size: 0.95rem;
+            color: var(--primary-light); letter-spacing: 6px;
+            font-weight: 700; margin-bottom: 12px; text-transform: uppercase;
+        }
+        .youpass-badge {
+            display: flex; justify-content: center; margin-bottom: 44px;
+        }
+        .youpass-badge span {
+            display: inline-block; padding: 6px 20px;
+            background: rgba(212,138,159,0.12); border-radius: 50px;
+            font-family: var(--font-accent); font-size: 1rem; color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+        .youpass-desc {
+            font-family: var(--font-accent);
+            font-size: 1.25rem; color: var(--text-mid);
+            line-height: 2; text-align: center;
+            margin-bottom: 48px;
+        }
+        .youpass-desc strong {
+            color: var(--primary); font-weight: 600;
+        }
+        .youpass-cards {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+            margin-bottom: 36px;
+        }
+        .youpass-card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 20px; padding: 32px 26px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 8px 32px rgba(212,138,159,0.08);
+            transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: center;
+        }
+        .youpass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(212,138,159,0.16);
+        }
+        .youpass-card .card-icon {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 1.6rem; color: #fff;
+            box-shadow: 0 6px 20px rgba(212,138,159,0.3);
+        }
+        .youpass-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem; font-weight: 700; color: var(--text);
+            margin-bottom: 10px;
+        }
+        .youpass-card p {
+            font-family: var(--font-accent);
+            font-size: 1.15rem; color: #999; line-height: 1.8;
+        }
+        .youpass-quote {
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 24px; padding: 36px 32px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: 0 8px 32px rgba(212,138,159,0.06);
+            text-align: center; margin-bottom: 32px;
+            position: relative;
+        }
+        .youpass-quote::before {
+            content: '✦'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: #fff;
+            width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem;
+        }
+        .youpass-quote p {
+            font-family: var(--font-warm);
+            font-size: 1.2rem; color: var(--text-mid); line-height: 2;
+            font-style: italic;
+        }
+        .youpass-bottom {
+            text-align: center;
+            font-family: var(--font-warm);
+            font-size: 1.15rem; color: var(--text-mid);
+            line-height: 2; padding: 28px 0 0;
+        }
+        .youpass-bottom em {
+            font-style: normal;
+            background: linear-gradient(transparent 60%, rgba(212,138,159,0.25) 60%);
+            color: var(--primary-dark); font-weight: 600;
+            padding: 0 2px;
+        }
+
+        /* ===== 가격 테이블 ===== */
+        .pricing-section {
+            background: #fff; padding: 110px 24px;
+        }
+        .pricing-inner { max-width: 700px; margin: 0 auto; }
+        .pricing-inner > h2 {
+            font-family: var(--font-title);
+            font-size: 2.3rem; font-weight: 700;
+            text-align: center; margin-bottom: 6px;
+        }
+        .pricing-title-en {
+            font-family: var(--font-display);
+            text-align: center; font-size: 1rem;
+            color: var(--primary); letter-spacing: 3px;
+            font-weight: 700; margin-bottom: 50px;
+        }
+        .pricing-table {
+            width: 100%; border-collapse: collapse;
+            margin-bottom: 14px; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 4px 20px rgba(212,138,159,0.08);
+        }
+        .pricing-table th,
+        .pricing-table td {
+            padding: 18px 24px; text-align: left;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-family: var(--font-warm);
+            font-size: 1.1rem;
+        }
+        .pricing-table th {
+            background: rgba(212,138,159,0.08);
+            font-weight: 600; color: var(--text);
+        }
+        .pricing-table td { color: var(--text-mid); }
+        .pricing-table td:last-child { text-align: right; font-weight: 600; }
+        .pricing-table tr.total-row {
+            background: var(--primary);
+        }
+        .pricing-table tr.total-row th,
+        .pricing-table tr.total-row td {
+            color: #fff; font-weight: 700; font-size: 1.2rem;
+            border-bottom: none;
+        }
+        .refund-box {
+            margin-top: 40px;
+        }
+        .refund-box h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 600;
+            margin-bottom: 20px; color: var(--text);
+        }
+        .refund-table {
+            width: 100%; border-collapse: collapse;
+            border-radius: 14px; overflow: hidden;
+            box-shadow: 0 4px 20px rgba(212,138,159,0.08);
+        }
+        .refund-table th,
+        .refund-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-family: var(--font-accent);
+            font-size: 1.1rem;
+        }
+        .refund-table th {
+            background: rgba(212,138,159,0.08);
+            font-weight: 600; color: var(--text); text-align: left;
+        }
+        .refund-table td { color: var(--text-mid); }
+        .refund-table td:last-child { text-align: right; color: var(--primary); font-weight: 600; }
+        .refund-table tr:last-child td { color: #ccc; }
+        .refund-notes {
+            margin-top: 24px;
+            font-family: var(--font-accent);
+            font-size: 1rem; color: #aaa; line-height: 1.9;
+        }
+        .refund-notes li { margin-bottom: 4px; list-style: none; }
+        .refund-notes li::before { content: '· '; color: var(--primary-light); }
+
+        /* ===== 접이식 토글 ===== */
+        .collapse-toggle {
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            background: none; border: none; cursor: pointer;
+            padding: 18px 0; margin-top: 28px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+        .collapse-toggle h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem; font-weight: 600; color: var(--text-mid);
+            margin: 0;
+        }
+        .collapse-toggle .toggle-icon {
+            font-size: 1.3rem; color: var(--primary); transition: transform 0.35s;
+            flex-shrink: 0;
+        }
+        .collapse-toggle.open .toggle-icon { transform: rotate(180deg); }
+        .collapse-toggle:hover h3 { color: var(--primary); }
+        .collapse-body {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .collapse-body.open {
+            max-height: 800px;
+        }
+
+        /* ===== 이용 전 참고 ===== */
+        .notice-section {
+            max-width: 800px; margin: 0 auto;
+            padding: 80px 24px 60px;
+        }
+        .notice-box {
+            background: linear-gradient(135deg, rgba(212,138,159,0.06), rgba(240,196,208,0.12));
+            border-radius: 20px; padding: 40px 34px;
+            border: 1px solid rgba(212,138,159,0.12);
+        }
+        .notice-box h3 {
+            font-family: var(--font-display);
+            font-size: 1.35rem; font-weight: 600;
+            color: var(--primary); margin-bottom: 20px;
+            text-align: center;
+        }
+        .notice-box p {
+            font-family: var(--font-accent);
+            font-size: 1.15rem; color: #888; line-height: 2;
+        }
+        .notice-box .notice-emphasis {
+            font-family: var(--font-warm);
+            font-size: 1.15rem; color: var(--text-mid);
+            text-align: center; margin-top: 20px;
+            line-height: 1.9;
+        }
+
+        /* ===== 반응형 ===== */
+        @media (max-width: 768px) {
+            /* 헤더: 네비 버튼 숨기고 햄버거만 표시 */
+            .header-nav { display: none; }
+            .header-top { padding: 12px 20px 10px; }
+            .logo-small {
+                display: none;
+            }
+            .logo-center { position: absolute; left: 50%; transform: translateX(-50%); }
+            .logo-center img { height: 26px; }
+            header { border-bottom: 1.5px solid rgba(212,138,159,0.15); }
+
+            /* 히어로: margin-top 줄이고 높이 확보 */
+            .hero { height: 480px; margin-top: 52px; }
+            .hero-content h1 { font-size: 2.2rem; line-height: 1.4; }
+            .hero-content .hero-sub { font-size: 1.05rem; line-height: 1.8; margin-bottom: 28px; }
+            .hero-btn { padding: 13px 36px; font-size: 1rem; }
+
+            /* 통계 바 */
+            .stats-bar { flex-wrap: wrap; gap: 14px; padding: 24px 12px; }
+            .stat-item { flex: 0 0 45%; }
+            .stat-num { font-size: 2rem; }
+            .stat-label { font-size: 0.82rem; }
+
+            /* 스토리 */
+            .story-section { padding: 60px 24px 40px; }
+            .story-section h2 { font-size: 1.8rem; margin-bottom: 22px; }
+            .story-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .story-card .photo-area { height: 130px; }
+            .story-info { padding: 8px 10px 12px; }
+            .story-date { font-size: 0.92rem; }
+            .story-label { font-size: 0.82rem; }
+
+            /* 무드 디바이더 */
+            .mood-divider { padding: 50px 24px 40px; }
+            .mood-text { font-size: 1.2rem; }
+
+            /* 소개 */
+            .intro-section { padding: 60px 24px 80px; }
+            .intro-text h2 { font-size: 2rem; }
+            .intro-text .brand-name { font-size: 1.2rem; }
+            .intro-text .desc { font-size: 1.1rem; }
+            .desc-highlight { font-size: 1.1rem; }
+            .intro-highlight-box { padding: 28px 22px; }
+
+            /* 매칭 과정 */
+            .process-section { padding: 70px 24px; }
+            .process-inner h2 { font-size: 1.8rem; }
+            .process-sub { font-size: 1.05rem; margin-bottom: 40px; }
+            .process-steps { flex-direction: column; gap: 28px; }
+            .process-steps::before { display: none; }
+            .step-num { width: 52px; height: 52px; font-size: 1rem; }
+            .step h4 { font-size: 1.15rem; }
+            .step p { font-size: 1rem; }
+
+            /* 추천 */
+            .recommend-section { padding: 60px 24px 40px; }
+            .recommend-section h2 { font-size: 1.8rem; margin-bottom: 30px; }
+            .recommend-list { gap: 10px; }
+            .recommend-item { padding: 18px 20px; gap: 12px; }
+            .recommend-item span { font-size: 1.1rem; }
+
+            /* 다른 이유 */
+            .why-section { padding: 60px 24px 50px; }
+            .why-section h2 { font-size: 1.8rem; }
+            .why-sub { font-size: 0.95rem; margin-bottom: 35px; }
+            .why-card { padding: 24px 20px; }
+            .why-card .why-header { gap: 10px; }
+            .why-card .num { font-size: 1.8rem; }
+            .why-card h3 { font-size: 1.2rem; }
+            .why-card p { padding-left: 0; margin-top: 8px; font-size: 1.05rem; }
+
+            /* 커플 */
+            .couple-section { padding: 70px 24px; }
+            .couple-inner > h2 { font-size: 1.9rem; }
+            .couple-sub { font-size: 1rem; margin-bottom: 35px; }
+            .couple-grid { grid-template-columns: 1fr; }
+            .couple-photo { height: 220px; }
+            .couple-text { font-family: var(--font-body); font-size: 1.05rem; padding: 18px; }
+
+            /* 후기 */
+            .review-section { padding: 70px 24px 50px; }
+            .review-section h2 { font-size: 1.9rem; }
+            .review-section .review-sub { font-size: 1rem; }
+            .review-item { padding: 24px 20px; }
+            .review-item::before { font-size: 2.5rem; top: 4px; left: 16px; }
+            .review-text { font-family: var(--font-body); font-size: 1.05rem; padding-left: 12px; }
+            .review-text b { font-size: 1.15rem; }
+            .review-author { padding-left: 12px; font-size: 0.8rem; }
+
+            /* 이용 안내 */
+            .info-section { padding: 70px 24px; }
+            .info-section h2 { font-size: 1.9rem; margin-bottom: 30px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .info-card-header h3 { font-size: 1.25rem; }
+            .info-card-body { font-size: 1.05rem; }
+
+            /* 신뢰 */
+            .trust-section { padding: 60px 24px 40px; }
+            .trust-section h2 { font-size: 1.9rem; }
+            .trust-sub { font-size: 1rem; margin-bottom: 30px; }
+            .trust-grid { grid-template-columns: 1fr; }
+            .trust-card { padding: 28px 20px; }
+            .trust-card h4 { font-size: 1.2rem; }
+            .trust-card p { font-size: 1.05rem; }
+
+            /* 상담 */
+            .contact-section { padding: 70px 24px; }
+            .contact-section h2 { font-size: 1.9rem; }
+            .contact-sub { font-size: 1.1rem; }
+            .contact-box { padding: 32px 22px; }
+            .phone-number { font-size: 2rem; }
+            .action-buttons { flex-direction: column; }
+            .action-buttons a { font-size: 1.05rem; padding: 14px; }
+
+            /* FAQ */
+            .faq-section { padding: 60px 24px; }
+            .faq-section h2 { font-size: 1.9rem; margin-bottom: 30px; }
+            .faq-question { font-size: 1.05rem; padding: 18px 0; }
+            .faq-answer p { font-size: 1.05rem; }
+
+            /* 최종 CTA */
+            .final-section { padding: 80px 24px; }
+            .final-section p { font-size: 1.6rem; }
+            .btn-cta { padding: 16px 44px; font-size: 1.1rem; }
+
+            /* 유패스 */
+            .youpass-section { padding: 80px 24px 60px; }
+            .youpass-section h2 { font-size: 2rem; }
+            .youpass-desc { font-size: 1.05rem; }
+            .youpass-cards { grid-template-columns: 1fr; gap: 14px; }
+            .youpass-card { padding: 26px 22px; }
+            .youpass-quote p { font-size: 1.05rem; }
+            .pricing-table th, .pricing-table td { padding: 12px 10px; font-size: 0.92rem; }
+            .refund-table th, .refund-table td { padding: 10px 10px; font-size: 0.92rem; }
+
+            /* 공지/환불 */
+            .notice-box { padding: 28px 22px; }
+            .notice-box p { font-size: 1.05rem; }
+            .notice-box h3 { font-size: 1.3rem; }
+
+            /* 플로팅 버튼 */
+            .floating-cta { width: 52px; height: 52px; font-size: 1.3rem; bottom: 20px; right: 16px; }
+            .floating-cta .tooltip { font-size: 0.78rem; right: 62px; }
+
+            /* 푸터 */
+            footer { padding: 36px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="header-top">
+            <span class="logo-small">우연한 소개팅</span>
+            <span class="logo-center"><img src="자산 4.png" alt="우연한 소개팅"></span>
+            <div class="hamburger" id="hamburgerBtn">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="header-nav">
+            <a href="#intro">소개</a>
+            <a href="#couple">커플 후기</a>
+            <a href="#contact">우연한 소개팅</a>
+            <a href="#faq">FAQ</a>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#intro">소개</a>
+            <a href="#couple">커플 후기</a>
+            <a href="#contact">우연한 소개팅</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </header>
+
+    <!-- 히어로 -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>우연이 만든 인연,<br>운명이 되는 순간</h1>
+            <p class="hero-sub">스와이프 말고, 사람이 직접 찾아드립니다.<br>취향부터 성격까지 — 당신만을 위한 매칭.</p>
+            <a href="#contact" class="hero-btn">무료 상담 시작하기</a>
+        </div>
+    </div>
+
+    <!-- 통계 -->
+    <section class="stats-section fade-in">
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-num">1,200+</div>
+                <div class="stat-label">누적 매칭</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">92%</div>
+                <div class="stat-label">첫 만남 만족도</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">17h</div>
+                <div class="stat-label">평균 매칭 소요</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">300+</div>
+                <div class="stat-label">커플 탄생</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 실시간 스토리 -->
+    <section class="story-section">
+        <h2 class="fade-in">실시간 커플 매칭 스토리</h2>
+        <div class="story-grid">
+            <div class="story-card fade-in">
+                <div class="photo-area"><img src="web/story_0c2ac5.jpg" alt="커플"></div>
+                <div class="story-info">
+                    <p class="story-date">3월 12일</p>
+                    <p class="story-label">강남 커플 매칭 성공</p>
+                </div>
+            </div>
+            <div class="story-card fade-in">
+                <div class="photo-area"><img src="web/story_d36534.jpg" alt="커플"></div>
+                <div class="story-info">
+                    <p class="story-date">3월 10일</p>
+                    <p class="story-label">성수동 커플 탄생</p>
+                </div>
+            </div>
+            <div class="story-card fade-in">
+                <div class="photo-area"><img src="web/story_df7403.jpg" alt="커플"></div>
+                <div class="story-info">
+                    <p class="story-date">3월 8일</p>
+                    <p class="story-label">판교 직장인 커플</p>
+                </div>
+            </div>
+            <div class="story-card fade-in">
+                <div class="photo-area"><img src="web/story_e553ed.jpg" alt="커플"></div>
+                <div class="story-info">
+                    <p class="story-date">3월 5일</p>
+                    <p class="story-label">여의도 커플 매칭</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 무드 디바이더 -->
+    <div class="mood-divider" data-animate="mood">
+        <div class="mood-line"></div>
+        <p class="mood-text">"바쁜 일상 속, 누군가를 만나고 싶다는 마음.<br>그게 시작이면 충분합니다."</p>
+    </div>
+
+    <!-- 좌우 플로팅 오브 장식 -->
+    <div class="side-deco side-deco-left">
+        <div class="side-orb o1"></div>
+        <div class="side-orb o2"></div>
+        <div class="side-orb o3"></div>
+        <div class="side-orb o4"></div>
+        <div class="side-heart h1">♥</div>
+        <div class="side-heart h2">♥</div>
+        <div class="side-heart h3">♥</div>
+        <div class="side-heart h4">♥</div>
+        <div class="side-heart h5">♥</div>
+        <div class="side-heart h6">♥</div>
+        <div class="side-heart h7">♥</div>
+        <div class="side-sparkle s1">✦</div>
+        <div class="side-sparkle s2">✧</div>
+        <div class="side-sparkle s3">⋆</div>
+    </div>
+    <div class="side-deco side-deco-right">
+        <div class="side-orb o1"></div>
+        <div class="side-orb o2"></div>
+        <div class="side-orb o3"></div>
+        <div class="side-orb o4"></div>
+        <div class="side-heart h1">♥</div>
+        <div class="side-heart h2">♥</div>
+        <div class="side-heart h3">♥</div>
+        <div class="side-heart h4">♥</div>
+        <div class="side-heart h5">♥</div>
+        <div class="side-heart h6">♥</div>
+        <div class="side-heart h7">♥</div>
+        <div class="side-sparkle s1">✦</div>
+        <div class="side-sparkle s2">✧</div>
+        <div class="side-sparkle s3">⋆</div>
+    </div>
+
+    <!-- 소개 -->
+    <section id="intro" class="intro-section">
+        <div class="intro-text fade-in">
+            <span class="label">About Us</span>
+            <h2>내 취향에 맞는<br>이상형 찾기</h2>
+            <p class="brand-name">우연한 소개팅</p>
+            <p class="desc">
+                회원님들의 취향, 외모, 이상형, 취미 등을<br>
+                매니저를 통해 사전에 전달받고,<br>
+                취향에 부합하는 이성을 소개시켜드립니다.
+            </p>
+            <div class="intro-highlight-box">
+                <div class="desc-highlight">
+                    우연한 계기로 인연이 닿은 두 사람이<br>
+                    계속 함께하는 운명적인 순간,<br>
+                    저희가 기획해 드리겠습니다.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 매칭 과정 -->
+    <section class="process-section">
+        <div class="process-inner">
+            <h2 class="fade-in">우연한 소개팅의 진행 방식</h2>
+            <p class="process-sub fade-in">내가 원하는 이상형과 소개팅!</p>
+            <div class="process-steps fade-in">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h4>우연의 시작</h4>
+                    <p>유패스(YOUPASS)로 매칭된 상대방과<br>3박 4일간 전용 대화방에서<br>서로를 알아가는 시간</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h4>두근두근 전화</h4>
+                    <p>대화방 오픈 후 3일 차 이내에<br>한 번 이상의 통화를 나누어<br>서로의 온도를 확인</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h4>대화와 교감</h4>
+                    <p>충분한 대화와 교감을 나누며<br>이 '우연'을 '인연'으로<br>이어갈지 신중하게 결정</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <h4>운명의 선택</h4>
+                    <p>4일 차, 담당 매니저의 안내에 따라<br>피드백을 진행하고<br>최종 만남 여부를 결정</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YOUPASS 유패스 설명 -->
+    <section class="youpass-section">
+        <div class="youpass-inner">
+            <p class="youpass-title-en fade-in">YOUPASS</p>
+            <h2 class="fade-in">유, 패스</h2>
+            <div class="youpass-badge fade-in"><span>당신(YOU)에게 + 직진한다(PASS)</span></div>
+
+            <p class="youpass-desc fade-in">
+                우연한 소개팅은 매칭 성사 시, 한 사람이 비용을 부담하는<br>
+                매너 있는 <strong>'단방향'</strong> 결제 시스템을 지향합니다.<br>
+                상대방에게 정중한 만남을 제안하는 유패스,<br>
+                스쳐 갈 뻔한 우연을 완벽한 인연으로 만들어 줍니다.
+            </p>
+
+            <div class="youpass-cards fade-in">
+                <div class="youpass-card">
+                    <div class="card-icon">💛</div>
+                    <h4>YOU (당신)</h4>
+                    <p>진정으로 대화하고 싶은 사람을<br>찾아 연결해 드리는 역할</p>
+                </div>
+                <div class="youpass-card">
+                    <div class="card-icon">🚀</div>
+                    <h4>PASS (직진권)</h4>
+                    <p>복잡한 대기 없이<br>대화방으로 직행하는 프리패스권</p>
+                </div>
+            </div>
+
+            <div class="youpass-quote fade-in">
+                <p>유패스를 사용하시면 상대방에게 전달되어<br>즉시 대화가 시작됩니다.<br>닫혀 있던 인연의 문을 여는 열쇠입니다.</p>
+            </div>
+
+            <div class="youpass-bottom fade-in">
+                프리미엄 소개팅 '우연한'의 매칭 시스템으로,<br>
+                양방향 결제의 부담을 허물어 모두에게<br>
+                <em>더 다정하고 열린 만남의 기회</em>를 제공합니다.
+            </div>
+        </div>
+    </section>
+
+    <!-- 이런 분께 추천 -->
+    <section class="recommend-section">
+        <h2 class="fade-in">이런 분들이 찾아주세요</h2>
+        <div class="recommend-list">
+            <div class="recommend-item fade-in">
+                <div class="recommend-check">&#10003;</div>
+                <span>소개팅 앱, 솔직히 좀 지쳤다 싶은 분</span>
+            </div>
+            <div class="recommend-item fade-in">
+                <div class="recommend-check">&#10003;</div>
+                <span>주변에 소개팅 해줄 사람이 마땅치 않은 분</span>
+            </div>
+            <div class="recommend-item fade-in">
+                <div class="recommend-check">&#10003;</div>
+                <span>외모보다 대화가 통하는 사람을 만나고 싶은 분</span>
+            </div>
+            <div class="recommend-item fade-in">
+                <div class="recommend-check">&#10003;</div>
+                <span>바빠서 직접 찾아볼 시간이 없는 분</span>
+            </div>
+            <div class="recommend-item fade-in">
+                <div class="recommend-check">&#10003;</div>
+                <span>결혼까지 생각하고 진지하게 만나고 싶은 분</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 다른 이유 -->
+    <section class="why-section">
+        <h2 class="fade-in">우연한 소개팅이 다른 이유</h2>
+        <p class="why-sub fade-in">앱에서는 절대 느낄 수 없는 것들이 있어요.</p>
+
+        <div class="why-card fade-in">
+            <div class="why-header">
+                <span class="num">01</span>
+                <h3>1:1 전담 매니저</h3>
+            </div>
+            <p>회원님 한 분 한 분에게 전담 매니저가 배정됩니다. 취향, 성격, 연애 스타일까지 꼼꼼히 파악해서 딱 맞는 분을 찾아드려요.</p>
+        </div>
+        <div class="why-card fade-in">
+            <div class="why-header">
+                <span class="num">02</span>
+                <h3>철저한 신원 검증</h3>
+            </div>
+            <p>모든 회원의 직업과 신원을 사전에 확인합니다. 안심하고 만나실 수 있도록 저희가 미리 검증해둡니다.</p>
+        </div>
+        <div class="why-card fade-in">
+            <div class="why-header">
+                <span class="num">03</span>
+                <h3>첫 만남까지 기획</h3>
+            </div>
+            <p>번호만 던져주는 게 아니에요. 만남 장소 추천부터 분위기 세팅까지, 첫 만남이 어색하지 않도록 도와드립니다.</p>
+        </div>
+    </section>
+
+    <!-- Real Couple -->
+    <section id="couple" class="couple-section">
+        <div class="couple-inner">
+            <h2 class="fade-in">매니저가 만든 인연</h2>
+            <p class="couple-sub fade-in">매니저가 직접 매칭한 회원님들의 실제 후기 대화</p>
+            <div class="couple-grid">
+                <div class="couple-card fade-in">
+                    <div class="couple-photo"><img src="real couple 수정/type1_01.png" alt="매칭 후기"></div>
+                    <div class="couple-text">첫 만남 후 매일 연락하고 계신다는 소식에 매니저도 덩달아 뿌듯했던 커플</div>
+                </div>
+                <div class="couple-card fade-in">
+                    <div class="couple-photo"><img src="real couple 수정/type2_01.png" alt="매칭 후기"></div>
+                    <div class="couple-text">소개해드린 분과 사귀게 됐다는 연락을 받았을 때, 매니저가 가장 행복한 순간</div>
+                </div>
+                <div class="couple-card fade-in">
+                    <div class="couple-photo"><img src="real couple 수정/type1_03.png" alt="매칭 후기"></div>
+                    <div class="couple-text">취미도 성격도 딱 맞는 분을 만나셨다는 회원님의 감사 인사</div>
+                </div>
+                <div class="couple-card fade-in hidden-items" data-group="couple">
+                    <div class="couple-photo"><img src="real couple 수정/type2_04.png" alt="매칭 후기"></div>
+                    <div class="couple-text">매니저의 조언대로 했더니 첫 만남이 전혀 어색하지 않았다는 후기</div>
+                </div>
+                <div class="couple-card fade-in hidden-items" data-group="couple">
+                    <div class="couple-photo"><img src="real couple 수정/type1_07.png" alt="매칭 후기"></div>
+                    <div class="couple-text">피드백을 반영해 두 번째 매칭에서 운명을 만나신 회원님</div>
+                </div>
+                <div class="couple-card fade-in hidden-items" data-group="couple">
+                    <div class="couple-photo"><img src="real couple 수정/type2_08.png" alt="매칭 후기"></div>
+                    <div class="couple-text">매니저님 덕분이라는 한마디에 모든 보람을 느끼는 순간</div>
+                </div>
+            </div>
+            <button class="more-btn fade-in" data-target="couple">더보기 +</button>
+        </div>
+    </section>
+
+    <!-- 후기 -->
+    <section class="review-section">
+        <h2 class="fade-in">솔직 후기</h2>
+        <p class="review-sub fade-in">실제 이용하신 분들의 이야기입니다.</p>
+        <div class="review-list">
+            <div class="review-item fade-in">
+                <p class="review-text">앱에서는 사진만 보고 넘기잖아요. 근데 여기는 <b>제 성격이나 연애할 때 스타일을 물어보더라고요.</b> 그래서인지 만난 분이랑 <b>대화가 진짜 잘 됐어요.</b></p>
+                <p class="review-author">24세 여 · 직장인</p>
+            </div>
+            <div class="review-item fade-in">
+                <p class="review-text">매니저님이 <b>첫 만남 장소를 추천해주셨는데</b>, 분위기가 진짜 좋았어요. 덕분에 어색한 시간 없이 바로 대화에 집중할 수 있었습니다. <b>지금 3개월째 만나는 중이에요.</b></p>
+                <p class="review-author">28세 남 · 개발자</p>
+            </div>
+            <div class="review-item fade-in">
+                <p class="review-text">나이 들수록 소개팅 자리가 줄잖아요. 주변에 부탁하기도 좀 그렇고. 근데 여기는 <b>부담 없이 상담받을 수 있어서</b> 좋았어요. <b>같은 가치관 가진 분</b> 만나서 정말 다행이에요.</p>
+                <p class="review-author">23세 여 · 대학생</p>
+            </div>
+            <div class="review-item fade-in">
+                <p class="review-text">솔직히 처음엔 이런 데 돈 쓰는 게 아깝다고 생각했어요. 근데 한 번 만나보니까 이해됐습니다. 그냥 번호 교환하는 게 아니라, <b>진짜 잘 맞는 사람을 찾아주더라고요.</b></p>
+                <p class="review-author">27세 남 · 공무원</p>
+            </div>
+            <div class="review-item fade-in hidden-items" data-group="review">
+                <p class="review-text">혼자 앱 돌리다가 지쳐서 왔는데, 여기는 <b>사람이 직접 봐주니까 확실히 다르더라고요.</b> 저한테 맞는 스타일을 <b>정확히 짚어주셨어요.</b></p>
+                <p class="review-author">25세 여 · 대학원생</p>
+            </div>
+            <div class="review-item fade-in hidden-items" data-group="review">
+                <p class="review-text">부모님이 자꾸 소개팅 시켜주시는데 맨날 안 맞아서 스트레스였거든요. 여기는 <b>제가 원하는 조건을 직접 말할 수 있어서</b> 편했어요. <b>결과도 좋았고요.</b></p>
+                <p class="review-author">29세 남 · 회계사</p>
+            </div>
+            <div class="review-item fade-in hidden-items" data-group="review">
+                <p class="review-text">첫 상담 때 매니저님이 <b>제 연애 패턴까지 물어보시더라고요.</b> 그래서인지 소개받은 분이 <b>제가 평소에 끌리는 타입이었어요.</b> 신기했어요 진짜.</p>
+                <p class="review-author">26세 여 · 마케터</p>
+            </div>
+        </div>
+        <button class="more-btn fade-in" data-target="review">더보기 +</button>
+    </section>
+
+    <!-- 가격 안내 -->
+    <section id="pricing" class="pricing-section">
+        <div class="pricing-inner">
+            <p class="pricing-title-en fade-in">PRICING</p>
+            <h2 class="fade-in">가격 안내</h2>
+            <p style="font-family:var(--font-accent); text-align:center; color:#aaa; font-size:1.1rem; margin-bottom:50px;" class="fade-in">매칭 비용</p>
+
+            <table class="pricing-table fade-in">
+                <tbody>
+                    <tr>
+                        <th>매칭 비용</th>
+                        <td>88,000원</td>
+                    </tr>
+                    <tr>
+                        <th>유패스</th>
+                        <td>22,000원</td>
+                    </tr>
+                    <tr class="total-row">
+                        <th>총 결제 금액</th>
+                        <td>110,000원</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button class="collapse-toggle fade-in" data-collapse="refund">
+                <h3>일차별 환불 규정</h3>
+                <span class="toggle-icon">▼</span>
+            </button>
+            <div class="collapse-body" data-collapse-body="refund">
+                <div class="refund-box" style="margin-top:0;">
+                    <table class="refund-table">
+                        <tbody>
+                            <tr>
+                                <th>매칭 연결 전</th>
+                                <td>100% 환불</td>
+                            </tr>
+                            <tr>
+                                <th>매칭 후 3시간 이내</th>
+                                <td>90% 환불</td>
+                            </tr>
+                            <tr>
+                                <th>1일차</th>
+                                <td>80% 환불</td>
+                            </tr>
+                            <tr>
+                                <th>2일차</th>
+                                <td>60% 환불</td>
+                            </tr>
+                            <tr>
+                                <th>3일차</th>
+                                <td>30% 환불</td>
+                            </tr>
+                            <tr>
+                                <th>4일차</th>
+                                <td>환불 불가능</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="refund-notes">
+                    <li>환불 금액은 매칭 비용(88,000원)을 기준으로 계산됩니다.</li>
+                    <li>매칭 취소 시, 상대회원은 환불 비율에 따라 유패스 금액이 정산됩니다.</li>
+                    <li>환불 발생 시, 회사는 수수료의 개념으로 유패스 차액을 공제합니다.</li>
+                    <li>유패스 금액은 회사와 5:5 비율이며, 상대 회원에게 전달됩니다.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 이용 전 참고 -->
+    <section class="notice-section">
+        <div class="notice-box fade-in">
+            <h3>이용 전 참고해 주세요!</h3>
+            <p>
+                우연한 소개팅은 수동적인 기다림이 아닌, 결제자 회원님이 유패스를 통해 원하는 상대에게 직접 다가가는 <strong>'주도적 선택 매칭'</strong> 시스템으로 운영됩니다.<br><br>
+                유패스를 사용한 회원님의 상세 프로필(거주지, 학력, 직업 등)은 매칭이 성사되기 전까지 상대방에게 기본적으로 공개되지 않아 프라이버시가 보호됩니다.<br>
+                <span style="font-size:0.95rem; color:#bbb;">(단, 본인이 공개를 희망하신다면 사전 공개로 설정하실 수 있습니다.)</span>
+            </p>
+            <p class="notice-emphasis">
+                우연한 소개팅의 모든 회원님은 이상형을 주지 않고<br>
+                다가올 인연에 다가갈 기회만 있습니다.<br>
+                닿지 않을 길 같던 우연이 당신의 인연으로 바뀌는 그 순간을<br>
+                도와드리겠습니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- 신뢰 섹션 -->
+    <section class="trust-section">
+        <h2 class="fade-in">안심하고 이용하세요</h2>
+        <p class="trust-sub fade-in">우연한 소개팅은 신뢰를 최우선으로 생각합니다.</p>
+        <div class="trust-grid">
+            <div class="trust-card fade-in">
+                <div class="trust-icon">&#128274;</div>
+                <h4>개인정보 보호</h4>
+                <p>모든 회원 정보는 암호화 관리되며, 양쪽 동의 없이는 연락처가 공유되지 않습니다.</p>
+            </div>
+            <div class="trust-card fade-in">
+                <div class="trust-icon">&#9989;</div>
+                <h4>신원 검증 시스템</h4>
+                <p>가입 시 신분증 및 직장 인증을 거치며, 허위 정보 등록을 원천 차단합니다.</p>
+            </div>
+            <div class="trust-card fade-in">
+                <div class="trust-icon">&#128222;</div>
+                <h4>전담 매니저 상담</h4>
+                <p>AI가 아닌 실제 매니저가 1:1로 상담하며, 매칭 후에도 피드백을 반영합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 상담 -->
+    <section id="contact" class="contact-section">
+        <div class="fade-in">
+            <h2>망설임은 만남을 늦출 뿐입니다.</h2>
+            <p class="contact-sub">상담은 무료예요. 부담 없이 연락주세요.</p>
+            <div class="contact-box">
+                <div class="phone-number">010-0000-0000</div>
+                <div class="action-buttons">
+                    <a href="#" class="btn-kakao">카카오톡 상담</a>
+                    <a href="#" class="btn-sms">문자 문의</a>
+                </div>
+                <p class="small-text">* 연중무휴 · 평일 10시~22시 / 주말 12시~20시</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+        <h2 class="fade-in">자주 묻는 질문</h2>
+        <div class="fade-in">
+            <div class="faq-item">
+                <button class="faq-question"><span>어떤 분들이 이용하시나요?</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>20대 후반~30대 직장인분들이 가장 많아요. 공무원, 대기업, IT, 의료, 교육 등 다양한 직종 분들이 이용하고 계세요. 바빠서 자연스러운 만남이 어려운 분들이 주로 찾아주십니다.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span>매칭까지 얼마나 걸리나요?</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>상담 후 보통 48시간 이내에 첫 프로필을 보내드려요. 물론 조건이나 상황에 따라 달라질 수 있는데, 최대한 빠르게 진행하려고 노력합니다.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span>개인정보가 걱정돼요.</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>회원 정보는 모두 암호화해서 관리하고 있어요. 매칭 상대에게는 회원님이 동의한 정보만 전달됩니다. 연락처는 양쪽 모두 동의한 후에만 교환돼요.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span>마음에 안 들면 어떻게 하나요?</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>프로그램 기간 안에서 다시 매칭받으실 수 있어요. 피드백 주시면 다음 매칭에 반영해서, 점점 더 잘 맞는 분을 소개해드립니다.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span>상담만 먼저 받아볼 수 있나요?</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>네, 당연히요. 카톡이나 문자로 편하게 상담부터 받아보세요. 상담은 무료이고, 결정은 천천히 하셔도 됩니다.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span>지방에서도 이용 가능한가요?</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>서울 · 경기 외 지역도 매칭 가능합니다. 부산, 대구, 대전 등 주요 도시에서도 이용하시는 분들이 계세요. 상담 시 지역을 말씀해주시면 맞춰서 진행해드려요.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span>매칭 전 동의 사항이 있나요?</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>네, 매칭 진행 시 몇 가지 동의 사항을 확인합니다. 대화 중 욕설·비하·성희롱 등 상대에게 불쾌감을 주는 언행은 금지되며, 매칭 상대의 개인정보를 제3자에게 공유하는 행위도 제한됩니다. 또한 서비스 이용 중 발생하는 대화 내용은 분쟁 조정을 위해 일정 기간 보관될 수 있습니다. 자세한 내용은 상담 시 안내드립니다.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span>유패스(YOUPASS)가 뭔가요?</span><span class="icon">+</span></button>
+                <div class="faq-answer"><p>유패스는 '당신(YOU)에게 직진한다(PASS)'의 합성어로, 원하는 상대방과의 대화방을 열기 위해 사용하는 매칭권입니다. 결제자님이 유패스를 사용하면 상대방에게 전달되어 즉시 대화가 시작됩니다. 단방향 결제 시스템으로 양쪽 모두의 부담을 줄여드립니다.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 최종 CTA -->
+    <section class="final-section">
+        <div class="fade-in">
+            <p>당신의 시간은 소중하니까.<br>만남도, 효율적으로.</p>
+            <a href="#contact" class="btn-cta">지금 바로 상담 시작하기</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="brand">우연한 소개팅</div>
+        <p>&copy; 2026 우연한 소개팅. All Rights Reserved.</p>
+    </footer>
+
+    <!-- 플로팅 상담 버튼 -->
+    <a href="#contact" class="floating-cta">
+        <span style="font-size:1.6rem;">&#128172;</span>
+        <span class="tooltip">무료 상담하기</span>
+    </a>
+
+    <script>
+        // 실시간 스토리 날짜/장소 랜덤 생성 (매일 00:00 갱신)
+        (function() {
+            const locations = [
+                '강남', '성수동', '판교', '여의도', '홍대', '이태원',
+                '잠실', '삼성동', '압구정', '청담', '신사동', '서초',
+                '역삼', '을지로', '연남동', '망원동', '한남동', '송파'
+            ];
+            const labels = [
+                '커플 매칭 성공', '커플 탄생', '직장인 커플', '커플 매칭',
+                '소개팅 성사', '인연 매칭', '주말 커플', '동갑 커플'
+            ];
+
+            function seededRandom(seed) {
+                var x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            }
+
+            function generateStoryData() {
+                var now = new Date();
+                // 오늘 날짜 기반 시드 (매일 00:00에 변경)
+                var daySeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+
+                var cards = document.querySelectorAll('.story-card');
+                var usedLocs = [];
+                var usedLabels = [];
+
+                cards.forEach(function(card, i) {
+                    var seed = daySeed * 100 + i;
+
+                    // 최근 이틀 내 랜덤 날짜 생성
+                    var hoursAgo = Math.floor(seededRandom(seed) * 48); // 0~47시간 전
+                    var targetTime = new Date(now.getTime() - hoursAgo * 3600000);
+                    var month = targetTime.getMonth() + 1;
+                    var date = targetTime.getDate();
+
+                    var dateStr = month + '월 ' + date + '일';
+
+                    // 중복 없는 장소 선택
+                    var locIdx, locAttempt = 0;
+                    do {
+                        locIdx = Math.floor(seededRandom(seed + 100 + locAttempt) * locations.length);
+                        locAttempt++;
+                    } while (usedLocs.includes(locIdx) && locAttempt < 50);
+                    usedLocs.push(locIdx);
+
+                    // 중복 없는 라벨 선택
+                    var labIdx, labAttempt = 0;
+                    do {
+                        labIdx = Math.floor(seededRandom(seed + 200 + labAttempt) * labels.length);
+                        labAttempt++;
+                    } while (usedLabels.includes(labIdx) && labAttempt < 50);
+                    usedLabels.push(labIdx);
+
+                    var dateEl = card.querySelector('.story-date');
+                    var labelEl = card.querySelector('.story-label');
+                    if (dateEl) dateEl.textContent = dateStr;
+                    if (labelEl) labelEl.textContent = locations[locIdx] + ' ' + labels[labIdx];
+                });
+            }
+
+            generateStoryData();
+
+            // 다음 자정까지 남은 시간 계산 후 자동 갱신
+            function scheduleNextUpdate() {
+                var now = new Date();
+                var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5);
+                var msUntilMidnight = tomorrow.getTime() - now.getTime();
+                setTimeout(function() {
+                    generateStoryData();
+                    scheduleNextUpdate();
+                }, msUntilMidnight);
+            }
+            scheduleNextUpdate();
+        })();
+
+        // 접이식 토글 (환불규정, 이용 전 참고)
+        document.querySelectorAll('.collapse-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.dataset.collapse;
+                const body = document.querySelector(`.collapse-body[data-collapse-body="${key}"]`);
+                const isOpen = btn.classList.contains('open');
+                btn.classList.toggle('open');
+                if (!isOpen) {
+                    body.style.maxHeight = body.scrollHeight + 'px';
+                    body.classList.add('open');
+                } else {
+                    body.style.maxHeight = null;
+                    body.classList.remove('open');
+                }
+            });
+        });
+
+        // FAQ 아코디언
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('.icon');
+                const wasActive = btn.classList.contains('active');
+
+                document.querySelectorAll('.faq-question.active').forEach(other => {
+                    if (other !== btn) {
+                        other.classList.remove('active');
+                        other.nextElementSibling.style.maxHeight = null;
+                        other.querySelector('.icon').textContent = '+';
+                    }
+                });
+
+                btn.classList.toggle('active');
+                if (!wasActive) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.textContent = '−';
+                } else {
+                    answer.style.maxHeight = null;
+                    icon.textContent = '+';
+                }
+            });
+        });
+
+        // 더보기 버튼
+        document.querySelectorAll('.more-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const group = btn.dataset.target;
+                const items = document.querySelectorAll(`.hidden-items[data-group="${group}"]`);
+                const isShowing = items[0]?.classList.contains('show');
+                items.forEach(item => {
+                    if (isShowing) {
+                        item.classList.remove('show');
+                    } else {
+                        item.classList.add('show');
+                        // 펼쳐진 후 fade-in 애니메이션
+                        setTimeout(() => item.classList.add('show'), 50);
+                    }
+                });
+                btn.textContent = isShowing ? '더보기 +' : '접기 −';
+            });
+        });
+
+        // 햄버거 메뉴 토글
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        });
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                hamburger.classList.remove('open');
+            });
+        });
+
+        // 스크롤 위치 저장/복원
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        const navEntry = performance.getEntriesByType('navigation')[0];
+        const isReload = navEntry && navEntry.type === 'reload';
+        if (isReload) {
+            const saved = sessionStorage.getItem('scrollPos');
+            if (saved) {
+                const y = parseInt(saved);
+                window.scrollTo(0, y);
+                requestAnimationFrame(() => window.scrollTo(0, y));
+                setTimeout(() => window.scrollTo(0, y), 100);
+            }
+        } else {
+            window.scrollTo(0, 0);
+            sessionStorage.removeItem('scrollPos');
+        }
+        let scrollTimer;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function() {
+                sessionStorage.setItem('scrollPos', String(window.scrollY || document.documentElement.scrollTop));
+            }, 100);
+        }, { passive: true });
+
+        // 헤더 스크롤 숨김
+        let lastY = 0;
+        window.addEventListener('scroll', () => {
+            const y = window.pageYOffset;
+            document.getElementById('header').style.top = (y > lastY && y > 120) ? '-140px' : '0';
+            lastY = y;
+        });
+
+        // 스크롤 애니메이션
+        const animObs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => animObs.observe(el));
+
+        // 숫자 카운트업
+        const countUp = (el, target, suffix = '') => {
+            let cur = 0;
+            const inc = target / 35;
+            const t = setInterval(() => {
+                cur += inc;
+                if (cur >= target) { cur = target; clearInterval(t); }
+                el.textContent = Math.floor(cur).toLocaleString() + suffix;
+            }, 28);
+        };
+        const statsObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const n = e.target.querySelectorAll('.stat-num');
+                    countUp(n[0], 1200, '+');
+                    countUp(n[1], 92, '%');
+                    n[2].textContent = '17h';
+                    countUp(n[3], 300, '+');
+                    statsObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelector('.stats-bar') && statsObs.observe(document.querySelector('.stats-bar'));
+
+        // ===== 감성 애니메이션 =====
+
+        // 1. 히어로 타이핑 효과
+        (function() {
+            const h1 = document.querySelector('.hero-content h1');
+            if (!h1) return;
+            const lines = ['우연이 만든 인연,', '운명이 되는 순간'];
+            h1.innerHTML = '';
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+
+            let lineIdx = 0, charIdx = 0;
+            function type() {
+                if (lineIdx >= lines.length) { cursor.remove(); return; }
+                if (charIdx === 0 && lineIdx > 0) h1.appendChild(document.createElement('br'));
+                if (charIdx < lines[lineIdx].length) {
+                    h1.appendChild(document.createTextNode(lines[lineIdx][charIdx]));
+                    h1.appendChild(cursor);
+                    charIdx++;
+                    setTimeout(type, 55 + Math.random() * 40);
+                } else {
+                    lineIdx++; charIdx = 0;
+                    setTimeout(type, lineIdx < lines.length ? 400 : 0);
+                }
+            }
+            setTimeout(type, 600);
+        })();
+
+        // 2. 무드 디바이더 라인 그리기 — IntersectionObserver
+        const moodObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('show');
+                    moodObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('[data-animate="mood"]').forEach(el => moodObs.observe(el));
+
+        // 3. 스토리 카드 순차 등장 (stagger)
+        const storyObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const cards = e.target.querySelectorAll('.story-card');
+                    cards.forEach((card, i) => {
+                        setTimeout(() => card.classList.add('show'), i * 180);
+                    });
+                    storyObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        const storyGrid = document.querySelector('.story-grid');
+        if (storyGrid) {
+            storyGrid.querySelectorAll('.story-card').forEach(c => c.classList.remove('show'));
+            storyObs.observe(storyGrid);
+        }
+
+        // 4. 커플 후기 보더 채움 효과
+        const borderObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('border-animate');
+                    borderObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.couple-card').forEach(el => borderObs.observe(el));
+
+        // 5. 플로팅 버튼 펄스 — CSS only (이미 적용됨)
+
+        // 6. 통계 숫자 스케일업 효과
+        const scaleObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const nums = e.target.querySelectorAll('.stat-num');
+                    nums.forEach((n, i) => {
+                        setTimeout(() => n.classList.add('animate'), i * 150);
+                    });
+                    scaleObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelector('.stats-bar') && scaleObs.observe(document.querySelector('.stats-bar'));
+
+        // 7. 패럴랙스 히어로 — CSS background-attachment: fixed (이미 적용됨)
+        // 추가로 스크롤에 따른 오버레이 진하기 변화
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            const heroBefore = hero.querySelector('::before'); // CSS로 처리
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                const heroH = hero.offsetHeight;
+                if (scrolled < heroH) {
+                    const ratio = scrolled / heroH;
+                    hero.style.setProperty('--parallax-opacity', (0.35 + ratio * 0.3).toFixed(2));
+                }
+            }, { passive: true });
+        }
+        // 8. 섹션 소제목 타이핑 효과
+        (function() {
+            function typeText(el, parts, speed) {
+                el.innerHTML = '';
+                el.style.visibility = 'visible';
+                var cursor = document.createElement('span');
+                cursor.className = 'typing-cursor';
+                cursor.style.background = 'var(--primary-light)';
+                var partIdx = 0, charIdx = 0;
+                function step() {
+                    if (partIdx >= parts.length) { setTimeout(function() { cursor.remove(); }, 600); return; }
+                    var part = parts[partIdx];
+                    if (part === '\n') {
+                        el.appendChild(document.createElement('br'));
+                        partIdx++; charIdx = 0;
+                        setTimeout(step, 100);
+                    } else if (charIdx < part.length) {
+                        el.appendChild(document.createTextNode(part[charIdx]));
+                        el.appendChild(cursor);
+                        charIdx++;
+                        setTimeout(step, speed + Math.random() * 30);
+                    } else {
+                        partIdx++; charIdx = 0;
+                        setTimeout(step, 50);
+                    }
+                }
+                step();
+            }
+
+            var headings = document.querySelectorAll('section > h2, .couple-inner > h2, .process-inner > h2, .pricing-inner > h2, .youpass-inner > h2, .intro-text > h2');
+            headings.forEach(function(h2) {
+                if (h2.closest('.hero')) return;
+                // innerHTML에서 <br> 기준으로 분리
+                var html = h2.innerHTML;
+                var segments = html.split(/<br\s*\/?>/i);
+                var parts = [];
+                segments.forEach(function(seg, i) {
+                    parts.push(seg.replace(/<[^>]*>/g, '').trim());
+                    if (i < segments.length - 1) parts.push('\n');
+                });
+                var hasContent = parts.some(function(p) { return p !== '\n' && p.length > 0; });
+                if (!hasContent) return;
+                h2.setAttribute('data-typing-parts', JSON.stringify(parts));
+                h2.style.minHeight = h2.offsetHeight + 'px';
+            });
+
+            var typingObs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        var partsStr = e.target.getAttribute('data-typing-parts');
+                        if (partsStr) {
+                            var parts = JSON.parse(partsStr);
+                            typeText(e.target, parts, 45);
+                            e.target.removeAttribute('data-typing-parts');
+                        }
+                        typingObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            headings.forEach(function(h2) {
+                if (h2.getAttribute('data-typing-parts')) {
+                    typingObs.observe(h2);
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>

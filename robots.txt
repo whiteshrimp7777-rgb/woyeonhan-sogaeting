@@ -1,0 +1,10 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://xn--h49an02blgd6vad56bvjd.com/sitemap.xml

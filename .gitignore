@@ -6,3 +6,6 @@ pages_full_extract/
 *.pages
 핑크메이트 웹사이트/
 IMG_*.JPG
+
+# Local Netlify folder
+.netlify

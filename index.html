@@ -1,9 +1,68 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '937794485274467');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=937794485274467&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>우연한 소개팅</title>
+    <title>우연이 만든 인연, 운명이 되는 순간 | 우연한 소개팅</title>
+    <meta name="description" content="20대 전문 매니저가 취향과 성격을 분석해 1:1로 매칭하는 소개팅 서비스. 무료 상담 후 나에게 맞는 인연을 만나보세요.">
+    <link rel="canonical" href="https://xn--h49an02blgd6vad56bvjd.com/" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta name="naver-site-verification" content="1b1f771344eec04ffe238b3943ee7519c5a71ea8" />
+    <meta property="og:title" content="우연이 만든 인연, 운명이 되는 순간 | 우연한 소개팅" />
+    <meta property="og:description" content="20대 전문 매니저가 취향과 성격을 분석해 1:1로 매칭하는 소개팅 서비스. 무료 상담 후 나에게 맞는 인연을 만나보세요." />
+    <meta property="og:image" content="https://xn--h49an02blgd6vad56bvjd.com/web/hero.jpg" />
+    <meta property="og:type" content="website" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "우연한 소개팅",
+      "url": "https://xn--h49an02blgd6vad56bvjd.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://xn--h49an02blgd6vad56bvjd.com/logo.png"
+      },
+      "description": "20대 전문 매니저가 1:1로 매칭하는 소개팅 서비스",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+82-10-6878-0200",
+        "contactType": "customer service",
+        "availableLanguage": "Korean"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "홈",
+          "item": "https://xn--h49an02blgd6vad56bvjd.com"
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/png" href="favicon_clean2.png">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Gaegu:wght@400;700&family=Sunflower:wght@300;500;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -236,15 +295,15 @@
             transition: top 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .header-top {
-            max-width: 1100px; margin: 0 auto; padding: 14px 24px 8px;
+            max-width: 1100px; margin: 0 auto; padding: 40px 24px 8px;
             display: flex; justify-content: space-between; align-items: center;
             position: relative;
         }
-        .logo-small { font-family: var(--font-accent); font-size: 1rem; color: var(--primary); letter-spacing: -0.3px; font-weight: 600; }
+        .logo-small { display: none; }
         .logo-center { position: absolute; left: 50%; transform: translateX(-50%); }
         .logo-center img { height: 52px; width: auto; }
         .header-nav {
-            max-width: 1100px; margin: 0 auto; padding: 20px 24px 18px;
+            max-width: 1100px; margin: 0 auto; padding: 40px 24px 18px;
             display: flex; justify-content: center; gap: 20px;
         }
         .header-nav a {
@@ -847,6 +906,46 @@
         }
         .floating-cta:hover .tooltip { opacity: 1; }
 
+        /* ===== 게시판 섹션 ===== */
+        .board-section {
+            padding: 100px 24px 80px;
+            background: #fff;
+        }
+        .board-inner {
+            max-width: 800px; margin: 0 auto;
+        }
+        .board-inner > h2 {
+            font-family: var(--font-title); font-size: 2rem;
+            text-align: center; margin-bottom: 12px;
+        }
+        .board-sub {
+            text-align: center; color: var(--text-mid); font-size: 1rem;
+            margin-bottom: 40px;
+        }
+        .board-list {
+            display: flex; flex-direction: column; gap: 0;
+        }
+        .board-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+            text-decoration: none; color: var(--text);
+            transition: background 0.2s;
+        }
+        .board-item:first-child { border-top: 2px solid var(--primary); }
+        .board-item:hover { background: #fdf5f7; }
+        .board-item .title {
+            font-size: 1.05rem; font-weight: 500;
+        }
+        .board-item .arrow {
+            color: var(--primary); font-size: 1.2rem; flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .board-inner > h2 { font-size: 1.5rem; }
+            .board-item { padding: 16px 16px; }
+            .board-item .title { font-size: 0.95rem; }
+        }
+
         /* ===== 푸터 ===== */
         footer {
             text-align: center; padding: 48px 24px;
@@ -855,8 +954,13 @@
         }
         footer .brand {
             color: var(--primary); font-weight: 700;
-            font-size: 0.95rem; margin-bottom: 8px;
+            font-size: 0.95rem; margin-bottom: 12px;
         }
+        footer .biz-info {
+            font-size: 0.75rem; color: #bbb; line-height: 1.8;
+            margin-top: 12px;
+        }
+        footer .biz-info span { margin: 0 6px; }
 
         /* ===== YOUPASS 섹션 ===== */
         .youpass-section {
@@ -1266,7 +1370,7 @@
     <header id="header">
         <div class="header-top">
             <span class="logo-small">우연한 소개팅</span>
-            <span class="logo-center"><img src="자산 4.png" alt="우연한 소개팅"></span>
+            <span class="logo-center"><img src="logo.png" alt="우연한 소개팅" width="478" height="94"></span>
             <div class="hamburger" id="hamburgerBtn">
                 <span></span><span></span><span></span>
             </div>
@@ -1276,12 +1380,14 @@
             <a href="#couple">커플 후기</a>
             <a href="#contact">우연한 소개팅</a>
             <a href="#faq">FAQ</a>
+            <a href="blog.html">블로그</a>
         </div>
         <div class="mobile-menu" id="mobileMenu">
             <a href="#intro">소개</a>
             <a href="#couple">커플 후기</a>
             <a href="#contact">우연한 소개팅</a>
             <a href="#faq">FAQ</a>
+            <a href="blog.html">블로그</a>
         </div>
     </header>
 
@@ -1321,28 +1427,28 @@
         <h2 class="fade-in">실시간 커플 매칭 스토리</h2>
         <div class="story-grid">
             <div class="story-card fade-in">
-                <div class="photo-area"><img src="web/story_0c2ac5.jpg" alt="커플"></div>
+                <div class="photo-area"><img src="web/story_0c2ac5.jpg" alt="우연한 소개팅 강남 커플 매칭 성공 사례" width="600" height="600"></div>
                 <div class="story-info">
                     <p class="story-date">3월 12일</p>
                     <p class="story-label">강남 커플 매칭 성공</p>
                 </div>
             </div>
             <div class="story-card fade-in">
-                <div class="photo-area"><img src="web/story_d36534.jpg" alt="커플"></div>
+                <div class="photo-area"><img src="web/story_d36534.jpg" alt="우연한 소개팅 성수동 커플 탄생 후기" width="600" height="327"></div>
                 <div class="story-info">
                     <p class="story-date">3월 10일</p>
                     <p class="story-label">성수동 커플 탄생</p>
                 </div>
             </div>
             <div class="story-card fade-in">
-                <div class="photo-area"><img src="web/story_df7403.jpg" alt="커플"></div>
+                <div class="photo-area"><img src="web/story_df7403.jpg" alt="우연한 소개팅 판교 직장인 커플 매칭 사례" width="600" height="327"></div>
                 <div class="story-info">
                     <p class="story-date">3월 8일</p>
                     <p class="story-label">판교 직장인 커플</p>
                 </div>
             </div>
             <div class="story-card fade-in">
-                <div class="photo-area"><img src="web/story_e553ed.jpg" alt="커플"></div>
+                <div class="photo-area"><img src="web/story_e553ed.jpg" alt="우연한 소개팅 여의도 커플 매칭 후기" width="600" height="327"></div>
                 <div class="story-info">
                     <p class="story-date">3월 5일</p>
                     <p class="story-label">여의도 커플 매칭</p>
@@ -1543,27 +1649,27 @@
             <p class="couple-sub fade-in">매니저가 직접 매칭한 회원님들의 실제 후기 대화</p>
             <div class="couple-grid">
                 <div class="couple-card fade-in">
-                    <div class="couple-photo"><img src="real couple 수정/type1_01.png" alt="매칭 후기"></div>
+                    <div class="couple-photo"><img src="couple/type1_01.png" alt="우연한 소개팅 매칭 성공 후기 카카오톡 대화" width="750" height="1428"></div>
                     <div class="couple-text">첫 만남 후 매일 연락하고 계신다는 소식에 매니저도 덩달아 뿌듯했던 커플</div>
                 </div>
                 <div class="couple-card fade-in">
-                    <div class="couple-photo"><img src="real couple 수정/type2_01.png" alt="매칭 후기"></div>
+                    <div class="couple-photo"><img src="couple/type2_01.png" alt="우연한 소개팅 회원 매칭 성사 후기 메시지" width="750" height="1484"></div>
                     <div class="couple-text">소개해드린 분과 사귀게 됐다는 연락을 받았을 때, 매니저가 가장 행복한 순간</div>
                 </div>
                 <div class="couple-card fade-in">
-                    <div class="couple-photo"><img src="real couple 수정/type1_03.png" alt="매칭 후기"></div>
+                    <div class="couple-photo"><img src="couple/type1_03.png" alt="우연한 소개팅 커플 성사 감사 후기" width="750" height="1354"></div>
                     <div class="couple-text">취미도 성격도 딱 맞는 분을 만나셨다는 회원님의 감사 인사</div>
                 </div>
                 <div class="couple-card fade-in hidden-items" data-group="couple">
-                    <div class="couple-photo"><img src="real couple 수정/type2_04.png" alt="매칭 후기"></div>
+                    <div class="couple-photo"><img src="couple/type2_04.png" alt="우연한 소개팅 매칭 후 교제 시작 후기" width="750" height="1292"></div>
                     <div class="couple-text">매니저의 조언대로 했더니 첫 만남이 전혀 어색하지 않았다는 후기</div>
                 </div>
                 <div class="couple-card fade-in hidden-items" data-group="couple">
-                    <div class="couple-photo"><img src="real couple 수정/type1_07.png" alt="매칭 후기"></div>
+                    <div class="couple-photo"><img src="couple/type1_07.png" alt="우연한 소개팅 소개팅 성공 회원 후기" width="750" height="1336"></div>
                     <div class="couple-text">피드백을 반영해 두 번째 매칭에서 운명을 만나신 회원님</div>
                 </div>
                 <div class="couple-card fade-in hidden-items" data-group="couple">
-                    <div class="couple-photo"><img src="real couple 수정/type2_08.png" alt="매칭 후기"></div>
+                    <div class="couple-photo"><img src="couple/type2_08.png" alt="우연한 소개팅 만족 회원 감사 메시지" width="750" height="1308"></div>
                     <div class="couple-text">매니저님 덕분이라는 한마디에 모든 보람을 느끼는 순간</div>
                 </div>
             </div>
@@ -1718,16 +1824,42 @@
         </div>
     </section>
 
+    <!-- 게시판 -->
+    <section class="board-section">
+        <div class="board-inner">
+            <h2 class="fade-in">더 알아보기</h2>
+            <p class="board-sub fade-in">우연한 소개팅에 대해 궁금한 점들을 정리했습니다</p>
+            <div class="board-list fade-in">
+                <a href="price.html" class="board-item">
+                    <span class="title">소개팅 비용, 이용 전에 꼭 확인해야 할 기준</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="process.html" class="board-item">
+                    <span class="title">소개팅 매칭은 어떻게 진행될까? 처음이라면 꼭 읽어보세요</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="youpass.html" class="board-item">
+                    <span class="title">유패스(YOUPASS)란? 소개팅 직진권의 모든 것</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="guide.html" class="board-item">
+                    <span class="title">소개팅 이용 전 주의사항, 매칭 전에 꼭 확인하세요</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- 상담 -->
     <section id="contact" class="contact-section">
         <div class="fade-in">
             <h2>망설임은 만남을 늦출 뿐입니다.</h2>
             <p class="contact-sub">상담은 무료예요. 부담 없이 연락주세요.</p>
             <div class="contact-box">
-                <div class="phone-number">010-0000-0000</div>
+                <div class="phone-number">010-6878-0200</div>
                 <div class="action-buttons">
-                    <a href="#" class="btn-kakao">카카오톡 상담</a>
-                    <a href="#" class="btn-sms">문자 문의</a>
+                    <a href="https://open.kakao.com/o/sD9BoHmi" target="_blank" class="btn-kakao">카카오톡 상담</a>
+                    <a href="sms:010-6878-0200" class="btn-sms">문자 문의</a>
                 </div>
                 <p class="small-text">* 연중무휴 · 평일 10시~22시 / 주말 12시~20시</p>
             </div>
@@ -1781,8 +1913,17 @@
         </div>
     </section>
 
+    <aside class="author-bio" style="max-width:720px;margin:0 auto;padding:24px 20px;font-size:0.9rem;color:#8C7B82;text-align:center;">
+        <p><strong>우연한 소개팅</strong> — 20대 전문 매니저가 직접 매칭하는 소개팅 서비스. 문의: 010-6878-0200</p>
+    </aside>
     <footer>
         <div class="brand">우연한 소개팅</div>
+        <div class="biz-info">
+            상호명: 준걸준 <span>|</span> 대표자명: 이상준<br>
+            사업장주소: 서울 영등포구 영신로 38길 15, 3층 3B-11<br>
+            사업자 등록번호: 832-16-02629 <span>|</span> 대표 전화: 010-6878-0200<br>
+            개인정보보호책임자: 이상준
+        </div>
         <p>&copy; 2026 우연한 소개팅. All Rights Reserved.</p>
     </footer>
 
@@ -2172,5 +2313,22 @@
         })();
     </script>
 
+<!-- Meta Pixel Event Tracking -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Lead - 무료 상담 시작하기 버튼
+    document.querySelectorAll('.hero-btn, .floating-cta').forEach(function(el) {
+        el.addEventListener('click', function() {
+            if(typeof fbq !== 'undefined') fbq('track', 'Lead');
+        });
+    });
+    // Contact - 카카오톡/문자 버튼
+    document.querySelectorAll('.btn-kakao, .btn-sms').forEach(function(el) {
+        el.addEventListener('click', function() {
+            if(typeof fbq !== 'undefined') fbq('track', 'Contact');
+        });
+    });
+});
+</script>
 </body>
 </html>
